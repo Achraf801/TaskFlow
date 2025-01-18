@@ -26,7 +26,6 @@
                                     <div class="text-xs text-gray-500">
                                         <span>Échéance: {{ $task->due_date ? \Carbon\Carbon::parse($task->due_date)->format('d/m/Y') : 'Non définie' }}</span>
                                     </div>
-                                    
                                 </div>
 
                                 <!-- Formulaire pour modifier le statut -->
@@ -40,6 +39,15 @@
                                     </select>
                                     <button type="submit" class="bg-blue-500 text-white text-sm px-3 py-1 rounded-md hover:bg-blue-600">
                                         <i class="fas fa-save"></i> Modifier
+                                    </button>
+                                </form>
+
+                                <!-- Bouton pour supprimer la tâche -->
+                                <form action="{{ route('tasks.destroyy', $task->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');" class="ml-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 text-white text-sm px-3 py-1 rounded-md hover:bg-red-600">
+                                        Supprimer
                                     </button>
                                 </form>
                             </li>

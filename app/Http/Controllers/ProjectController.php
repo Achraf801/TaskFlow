@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
-use App\Models\Task;  // Ajoutez cette ligne
+use App\Models\Task;   
 
 
 class ProjectController extends Controller
@@ -23,7 +23,7 @@ class ProjectController extends Controller
     $task->status = $request->status;
     $task->save();
 
-    return redirect()->back()->with('success', 'Statut de la tâche mis à jour avec succès.');
+    return redirect()->back() ;
 }
 
     public function show($id)
@@ -60,13 +60,13 @@ public function addTask(Request $request, $id)
 {
     // Vérifiez si l'utilisateur actuel a créé ce projet
     if ($project->user_id !== auth()->id()) {
-        return redirect()->route('projects.index')->with('error', 'Vous ne pouvez pas supprimer ce projet.');
+        return redirect()->route('projects.index');
     }
 
     // Supprimer le projet
     $project->delete();
 
-    return redirect()->route('projects.index')->with('success', 'Projet supprimé avec succès.');
+    return redirect()->route('projects.index');
 }
 
 public function index()
@@ -84,7 +84,7 @@ public function index()
      {
          // Vérifiez si l'utilisateur actuel a créé ce projet
          if ($project->user_id !== auth()->id()) {
-             return redirect()->route('projects.index')->with('error', 'Vous ne pouvez pas modifier ce projet.');
+             return redirect()->route('projects.index');
          }
  
          return view('projects.edit', compact('project'));
@@ -95,7 +95,7 @@ public function index()
      {
          // Vérifiez si l'utilisateur actuel a créé ce projet
          if ($project->user_id !== auth()->id()) {
-             return redirect()->route('projects.index')->with('error', 'Vous ne pouvez pas modifier ce projet.');
+             return redirect()->route('projects.index');
          }
  
          // Validation des données
@@ -108,13 +108,21 @@ public function index()
              'name' => $request->input('name'),
          ]);
  
-         return redirect()->route('projects.index')->with('success', 'Projet mis à jour avec succès.');
+         return redirect()->route('projects.index');
      }
     
     public function create()
     {
         return view('projects.create');
     }
+    public function destroyy($id)
+{
+    $task = Task::findOrFail($id);
+    $task->delete();
+
+    return redirect()->back()->with('success', 'Tâche supprimée avec succès.');
+}
+
 
     public function store(Request $request)
     {
@@ -127,6 +135,6 @@ public function index()
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Projet créé avec succès!');
+        return redirect()->route('dashboard');
     }
 }

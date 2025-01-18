@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
      
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');  // Vérifie que cette ligne est présente
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');   
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
      
     
@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
 
     Route::put('/tasks/{task}/status', [ProjectController::class, 'updateTaskStatus'])->name('tasks.updateStatus');
 
+    Route::delete('/tasks/{task}', [ProjectController::class, 'destroyy'])->name('tasks.destroyy');
 
 
 

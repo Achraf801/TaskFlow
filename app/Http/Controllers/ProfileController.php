@@ -40,8 +40,8 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('profile.index')->with('status', 'Profil mis à jour avec succès.');
-    }
+        return redirect()->route('profile.index');
+     }
 
     // Supprimer le compte
     public function destroy()
@@ -49,6 +49,6 @@ class ProfileController extends Controller
         $user = Auth::user();
         $user->delete();
 
-        return redirect()->route('login')->with('status', 'Votre compte a été supprimé.');
+        return redirect()->route('login');
     }
 }

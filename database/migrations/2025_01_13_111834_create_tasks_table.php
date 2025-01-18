@@ -11,20 +11,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');  // Nom de la tâche
-            $table->foreignId('project_id')->constrained()->onDelete('cascade');  // Référence au projet
-            $table->timestamps();
-        });
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('project_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['À faire', 'En cours', 'Terminé'])->default('À faire'); // Champ pour le statut
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('tasks')) {
+            Schema::create('tasks', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->foreignId('project_id')->constrained();
+                $table->enum('status', ['À faire', 'En cours', 'Terminé'])->default('À faire');
+                $table->timestamps();
+            });
+        }
     }
+    
     
 
     /**
